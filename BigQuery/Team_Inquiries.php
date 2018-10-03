@@ -6,7 +6,7 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="./layui/css/layui.css"  media="all">
+  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
@@ -62,7 +62,7 @@
 		$id_comp=$j["c1"].$j["c2"].$j["c3"].$j["c4T1"].$j["c4T2"];
 		echo "<tr><td>".$j["c1"]." ".$j["c2"]." ".$j["c3"]."</td><td>".$j["c4T1"]."</td>";
 		$style=$j["c4R"]=='VS'?'layui-btn-normal':'';	//已经结束的比赛和还未返回结果的比赛要有所区分。
-		echo '<td><a class="layui-btn layui-btn-xs '.$style.'" href="./topPage.php">'.$j["c4R"]."</a></td><td>".$j["c4T2"]."</td></tr>";
+		echo '<td><a class="layui-btn layui-btn-xs '.$style.'" href="./Replace_Competition_Page.php?ID_COMP='.urlencode($id_comp).'">'.$j["c4R"]."</a></td><td>".$j["c4T2"]."</td></tr>";
 		
 		// $query_string[]="insert into Team_Competition_Data values(null,'".implode("','",$j)."')";
 		$query_string[]="replace into Team_Competition_Data values('".$id_comp."','".implode("','",$j)."')";
@@ -131,7 +131,7 @@ function Team_Game_Query($team_Name){	//这是聚合函数的WEBAPI
 }
 ?>
 
-<script src="./layui/layui.js" charset="utf-8"></script>
+<script src="../layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 layui.use(['form', 'layedit', 'laydate'], function(){

@@ -49,15 +49,15 @@
 				<li class="layui-nav-item">
 					<a href="javascript:;">查询</a>
 					<dl class="layui-nav-child">
-					  <dd><a href="javascript:setUrl('./League_Inquiries.php');">赛事查询</a></dd>
-					  <dd><a href="javascript:setUrl('./Team_Inquiries.php'  );">球队查询</a></dd>
+					  <dd><a href="javascript:setUrl('./BigQuery/League_Inquiries.php');">赛事查询</a></dd>
+					  <dd><a href="javascript:setUrl('./BigQuery/Team_Inquiries.php'  );">球队查询</a></dd>
 					  <dd><a href="">我的竞猜</a></dd>
 					  <dd><a href="">别人出题</a></dd>
 					</dl>
 				</li>
 				<li class="layui-nav-item"><a href="">用户</a></li>
 				<li class="layui-nav-item">
-					<a href="javascript:;">测试</a>
+					<a href="javascript:setUrl('./BigQuery/Replace_Competition_Page.php');">测试</a>
 				</li>
 			</ul>
 			
