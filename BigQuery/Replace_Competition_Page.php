@@ -11,11 +11,16 @@
 </head>
 <body>
 
+<!-- <marquee><b style="font-size:22px;">姜晨婷在打哈欠</b ></marquee> -->
 
 <?php
-$_GET['ID_COMP']='德甲09-2221:30霍芬海姆多特蒙德';
+session_start();
+// echo $_SESSION['ID_COMP'];
+// $_GET['ID_COMP']='德甲09-2221:30霍芬海姆多特蒙德';
+// $_GET['ID_COMP']=urldecode($_GET['ID_COMP']);
 // echo $_GET['ID_COMP'];
-echo '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"><legend><p style="font-size:24px;font-family:Microsoft YaHei;font-weight:bold;font-style:italic;">赛事信息</p></legend></fieldset>';
+// echo '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"><legend><p style="font-size:24px;font-family:Microsoft YaHei;font-weight:bold;font-style:italic;">赛事信息</p></legend></fieldset>';
+echo '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 15px;"><legend>比赛信息</legend></fieldset>';
 $con = mysqli_connect("localhost","root","","guessing_league");
 
 if (!$con){ die('Could not connect: '.mysqli_error()); return;	}
@@ -23,13 +28,32 @@ if (!$con){ die('Could not connect: '.mysqli_error()); return;	}
 // mysqli_query($con,'create table if not exists Team_Competition_Data(id int auto_increment primary key not null, c1 varchar(20), c2 varchar(20), c3 varchar(20), c4T1 varchar(20), c4T1URL varchar(20), c4R varchar(20), c4T2 varchar(20), c4T2URL varchar(20), c51 varchar(20), c52 varchar(20), c52Link varchar(20), c53 varchar(20), c53Link varchar(20), c54 varchar(20), c54Link varchar(20)) default charset=utf8');
 mysqli_query($con,'set names utf8');	//极好地解决了中文乱码问题。
 $result=mysqli_query($con,"select c1,c2,c3,c4T1,c4R,c4T2 from team_competition_data where id='".$_GET['ID_COMP']."'");
+// $result=mysqli_query($con,"select c1,c2,c3,c4T1,c4R,c4T2 from team_competition_data where id='".$_SESSION['ID_COMP']."'");
 while($row = mysqli_fetch_assoc($result)){
 	var_dump($row);
 }
 
-// var_dump($result);
-mysqli_close($con);
 
+echo '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 15px;"><legend>相关考卷信息</legend></fieldset>';
+//检查是否有一个创造考卷的表，没有则创建。
+mysqli_query($con,'create table if not exists Exam_Paper_Data(pp_id int auto_increment primary key not null, cmp_id varchar(20), pp_title varchar(20), pp_describe varchar(20), pp_creator varchar(20), pp_create_time varchar(20), competition_deadline_time varchar(20), revise_pp_time varchar(20), students_max_num int, score_max_num int, pp_status varchar(20) ) default charset=utf8');
+
+$result=mysqli_query($con,"select * from Exam_Paper_Data where cmp_id='".$_GET['ID_COMP']."'");
+// $result=mysqli_query($con,"select * from Exam_Paper_Data where cmp_id='".$_SESSION['ID_COMP']."'");
+
+if(mysqli_num_rows($result)){
+	while($row = mysqli_fetch_assoc($result)){
+		var_dump($row);
+	}
+}else{
+	var_dump( '尚无相关考卷信息');
+}
+
+echo '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 15px;"><legend>考卷创作</legend></fieldset>';
+echo '<span><a style="width:100%;" class="layui-btn layui-btn-radius" href="./Create_Exam_Paper_Page.php?ID_COMP='.urlencode($_GET['ID_COMP']).'">创作相关考卷</a></span>';
+// echo '<br><a class="layui-btn" href="./Create_Exam_Paper_Page.php?ID_COMP='.urlencode($_SESSION['ID_COMP']).'">创建相关考卷</a>';
+
+mysqli_close($con);
 ?>
           
 <script src="../layui/layui.js" charset="utf-8"></script>

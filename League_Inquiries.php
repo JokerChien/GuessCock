@@ -11,44 +11,42 @@
 </head>
 <body>
 
-	<table class="layui-table" lay-skin="line">
-	  <colgroup>
-		<col width="10%">
-		<col width="20%">
-		<col width="17%">
-		<col width="17%">
-		<col width="17%">
-		<col>
-	</colgroup>
-		<thead><tr><th>#</th><th>姓名</th><th>积分</th><th>出题</th><th>答题</th><th>利率</th></tr></thead>
-		<tr><td>1</td><td>纲哥</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>2</td><td>李梁</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>3</td><td>钱老师</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>4</td><td>宋胖子</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>5</td><td>大茅</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>6</td><td>王昊</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>7</td><td>陈健</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>8</td><td>许万三</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>9</td><td>小蔡</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>10</td><td>波波</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>11</td><td>杜涵琪</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>12</td><td>空哥</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>13</td><td>鹏哥</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>14</td><td>邹宇</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>15</td><td>戴磊</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>16</td><td>瞿展堂</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>17</td><td>马司令</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>18</td><td>朱力</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-		<tr><td>19</td><td>武老峰</td><td>0</td><td>0</td><td>0</td><td>0%</td></tr>
-	</table>
-  </div>
-  
-          
+<?php
+	$appKey="c44c8cab0848d9e5fcc35809e45be3ec";
+	$teamInquiry=urlencode('英超');
+	
+	$url ="http://op.juhe.cn/onebox/football/league?key=".$appKey."&league=".$teamInquiry; 
+    $ch = curl_init();
+    //设置选项，包括URL
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+
+    //执行并获取HTML文档内容
+    $output = curl_exec($ch);
+    //释放curl句柄
+    curl_close($ch);
+    var_dump( $output);
+	
+	$data = json_decode($output, true);
+	
+	// var_dump( $data);
+	
+	foreach($data as $key=>$value){
+		if(count($value)<=1){
+			echo $value;
+		}else{
+			echo count($value);
+			var_dump($value);
+		}
+	}
+?>
+
+
+
 <script src="./layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-	
-	
 layui.use(['form', 'layedit', 'laydate'], function(){
   var form = layui.form
   ,layer = layui.layer

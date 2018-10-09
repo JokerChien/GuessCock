@@ -6,7 +6,7 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+  <link rel="stylesheet" href="./layui/css/layui.css"  media="all">
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
@@ -40,7 +40,6 @@
 		return;
 	}
 	
-	// session_start();
 	// echo isset($_POST['team_Name'])?$_POST['team_Name']:'';
 	// $data=json_decode(file_get_contents("./data/team_Data.json"),true);
 	// var_dump($data['result']['list']);
@@ -63,19 +62,12 @@
 		$id_comp=$j["c1"].$j["c2"].$j["c3"].$j["c4T1"].$j["c4T2"];
 		echo "<tr><td>".$j["c1"]." ".$j["c2"]." ".$j["c3"]."</td><td>".$j["c4T1"]."</td>";
 		$style=$j["c4R"]=='VS'?'layui-btn-normal':'';	//已经结束的比赛和还未返回结果的比赛要有所区分。
-		echo '<td><a class="layui-btn layui-btn-xs '.$style.'" href="./Replace_Competition_Page.php?ID_COMP='.urlencode($id_comp).'">'.$j["c4R"]."</a></td><td>".$j["c4T2"]."</td></tr>";
-		
-		
-		// $_SESSION['ID_COMP']=$id_comp;
-		// echo '<td><form action="./Replace_Competition_Page.php" method="POST"><button type="submit" name="ID_COMP" class="layui-btn layui-btn-xs '.$style.'" value="'.urlencode($id_comp).'">'.$j["c4R"]."</button></form></td><td>".$j["c4T2"]."</td></tr>";
-		
-		
+		echo '<td><a class="layui-btn layui-btn-xs '.$style.'" href="./topPage.php">'.$j["c4R"]."</a></td><td>".$j["c4T2"]."</td></tr>";
 		
 		// $query_string[]="insert into Team_Competition_Data values(null,'".implode("','",$j)."')";
 		$query_string[]="replace into Team_Competition_Data values('".$id_comp."','".implode("','",$j)."')";
 	}
 	echo '</table>';
-	echo '<sub style="color:grey;">点击比分查询或创建考试信息。</sub>';
 	
 	// echo $query_string;
 	// return;
@@ -95,15 +87,13 @@
 	// var_dump($result);
 	
 	//如果数据表不存在，则创建这个表。阿凡达数据和聚合数据的数据结构都是一样的。
-	mysqli_query($con,'create table if not exists Team_Competition_Data(id varchar(40) primary key not null, c1 varchar(20), c2 varchar(20), c3 varchar(20), c4T1 varchar(20), c4T1URL varchar(20), c4R varchar(20), c4T2 varchar(20), c4T2URL varchar(20), c51 varchar(20), c52 varchar(20), c52Link varchar(20), c53 varchar(20), c53Link varchar(20), c54 varchar(20), c54Link varchar(20)) default charset=utf8');
+	mysqli_query($con,'create table if not exists Team_Competition_Data(id int auto_increment primary key not null, c1 varchar(20), c2 varchar(20), c3 varchar(20), c4T1 varchar(20), c4T1URL varchar(20), c4R varchar(20), c4T2 varchar(20), c4T2URL varchar(20), c51 varchar(20), c52 varchar(20), c52Link varchar(20), c53 varchar(20), c53Link varchar(20), c54 varchar(20), c54Link varchar(20)) default charset=utf8');
 	mysqli_query($con,'set names utf8');	//极好地解决了中文乱码问题。
 	foreach($query_string as $i){
 		mysqli_query($con,$i);
 	}
 	
 	mysqli_close($con);
-	
-	
 	return;
 	
 	
@@ -141,7 +131,7 @@ function Team_Game_Query($team_Name){	//这是聚合函数的WEBAPI
 }
 ?>
 
-<script src="../layui/layui.js" charset="utf-8"></script>
+<script src="./layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 layui.use(['form', 'layedit', 'laydate'], function(){
